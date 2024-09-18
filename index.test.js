@@ -14,31 +14,74 @@ describe('Band, Musician, and Song Models', () => {
 
     test('can create a Band', async () => {
         // TODO - test creating a band
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
+        const newBand = await Band.create({
+            name:"One Direction",
+            genre:"Pop"
+        })
+        expect(newBand).toEqual(expect.objectContaining({
+            id: 1,
+            name:"One Direction",
+            genre:"Pop"
+        }));
     })
 
     test('can create a Musician', async () => {
         // TODO - test creating a musician
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
+        const newMusician = await Musician.create({
+            name: "Zayn Malik",
+            instrument: "Piano"
+        })
+        expect(newMusician).toEqual(expect.objectContaining({
+            id:1,
+            name: "Zayn Malik",
+            instrument: "Piano"
+
+        }));
     })
 
     test('can update a Band', async () => {
         // TODO - test updating a band
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
+        const firstBand = await Band.findByPk(1)
+        const updatedBand = await firstBand.update({genre: "RnB"})
+        expect(updatedBand).toEqual(expect.objectContaining({
+            id: 1,
+            name:"One Direction",
+            genre:"RnB"
+        }));
     })
 
     test('can update a Musician', async () => {
         // TODO - test updating a musician
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
+        const firstMusician = await Musician.findByPk(1);
+        const updatedMusician = await firstMusician.update({instrument: "Guiter"})
+        expect(updatedMusician).toEqual(expect.objectContaining({
+            id:1,
+            name: "Zayn Malik",
+            instrument: "Guiter"
+        
+        }));
     })
 
     test('can delete a Band', async () => {
+        const banToDelete = await Band.findByPk(1);
+        const deletedBand = await banToDelete.destroy()
         // TODO - test deleting a band
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
+        expect(deletedBand).toEqual(expect.objectContaining({
+            id: 1,
+            name:"One Direction",
+            genre:"RnB"
+        }));
     })
 
     test('can delete a Musician', async () => {
         // TODO - test deleting a musician
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
+        const musicianToDelete = await Musician.findByPk(1);
+        const deletedMusician = await musicianToDelete.destroy()
+        expect(deletedMusician).toEqual(expect.objectContaining({
+            id:1,
+            name: "Zayn Malik",
+            instrument: "Guiter"
+        
+        }));
     })
 })
