@@ -84,4 +84,54 @@ describe('Band, Musician, and Song Models', () => {
         
         }));
     })
+
+    test("Band has many musician", async()=>{
+        await sequelize.sync({force: true})
+        const newBand = await Band.create({
+            name:"One Direction",
+            genre:"Pop"
+        })
+
+        const musician1 = await Musician.create({
+            name: "Zayn Malik",
+            instrument: "Piano"
+        })
+        const musician2 = await Musician.create({
+            name: "Harry Styles",
+            instrument: "Guiter"
+        })
+
+        await newBand.addMusician(musician1)
+        await newBand.addMusician(musician2)
+
+        const associatedMusician = await newBand.getMusicians()
+
+        expect(associatedMusician.length).toBe(2)
+    })
+
+    test("Band has many songs", async()=>{
+        await sequelize.sync({force: true})
+        const newBand = await Band.create({
+            name:"One Direction",
+            genre:"Pop"
+        })
+
+        const song1 = await Musician.create({
+            title:"Mea culpa",
+            year: 2017,
+            length: 5
+        })
+        const song2 = await Musician.create({
+            title:"Roleplay",
+            year: 2024,
+            length: 3
+        })
+
+        await newBand.addSong(song1)
+        await newBand.addSong(song2)
+
+        const associatedSong = await newBand.getSongs()
+
+        expect(associatedSong.length).toBe(2)
+    })
 })
